@@ -1,22 +1,15 @@
 // === Song List ===
-// Place your mp3/mp4 inside a "songs" folder, covers inside "covers"
-const songs = [
-  {
-    title: "Pookie Beats",
-    file: "songs/pookie.mp3",
-    cover: "covers/pookie.jpg"
-  },
-  {
-    title: "Vibe Mix",
-    file: "songs/vibe.mp3",
-    cover: "covers/vibe.jpg"
-  },
-  {
-    title: "Chill Mode",
-    file: "songs/chill.mp4",
-    cover: "covers/chill.jpg"
-  }
-];
+// 18 songs, all mp4 format, stored in /songs/
+// Covers stored in /covers/, or you can just use one default cover
+const songs = [];
+
+for (let i = 1; i <= 18; i++) {
+  songs.push({
+    title: `Song ${i}`,
+    file: `songs/song${i}.mp4`,
+    cover: `covers/cover${i}.jpg` // or "covers/default.jpg" if same for all
+  });
+}
 
 let currentSongIndex = 0;
 let isPlaying = false;
@@ -95,18 +88,13 @@ audio.addEventListener("timeupdate", () => {
     progress.value = (currentTime / duration) * 100;
   }
 
-  // Format time
   let curMin = Math.floor(currentTime / 60) || 0;
   let curSec = Math.floor(currentTime % 60) || 0;
   let durMin = Math.floor(duration / 60) || 0;
   let durSec = Math.floor(duration % 60) || 0;
 
-  currentTimeEl.textContent = `${curMin}:${curSec
-    .toString()
-    .padStart(2, "0")}`;
-  durationEl.textContent = `${durMin}:${durSec
-    .toString()
-    .padStart(2, "0")}`;
+  currentTimeEl.textContent = `${curMin}:${curSec.toString().padStart(2, "0")}`;
+  durationEl.textContent = `${durMin}:${durSec.toString().padStart(2, "0")}`;
 });
 
 // Seek
