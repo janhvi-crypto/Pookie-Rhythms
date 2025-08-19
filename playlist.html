@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PookieRhythms 🎶</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>🎶 PookieRhythms</h1>
+
+  <!-- Player -->
+  <div id="player">
+    <img id="cover" src="covers/pookie.jpg" alt="Cover">
+    <h2 id="title">✨ Pookie Beats</h2>
+    
+    <audio id="audio"></audio>
+
+    <!-- Progress -->
+    <div id="progress-container">
+      <span id="current-time">0:00</span>
+      <input type="range" id="progress" value="0" min="0" max="100">
+      <span id="duration">0:00</span>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls">
+      <button id="prevBtn">⏮️</button>
+      <button id="playBtn">▶️</button>
+      <button id="nextBtn">⏭️</button>
+      <button id="repeatBtn">🔁</button>
+    </div>
+  </div>
+
+  <!-- Playlist -->
+  <div id="playlist">
+    <h2>My Playlist</h2>
+    <ul id="playlist-items"></ul>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
+
+
