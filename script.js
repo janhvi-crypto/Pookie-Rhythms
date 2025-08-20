@@ -25,12 +25,15 @@ const cover = document.getElementById("cover");
 const title = document.getElementById("title");
 const progress = document.getElementById("progress");
 
+// Load a song
 function loadSong(song) {
   title.textContent = song.title;
   audio.src = song.src;
   cover.src = song.cover;
+  updateMediaSession(song);
 }
 
+// Play / Pause controls
 document.getElementById("play").addEventListener("click", () => {
   audio.play();
 });
@@ -39,24 +42,72 @@ document.getElementById("pause").addEventListener("click", () => {
   audio.pause();
 });
 
+// Next / Prev controls
 document.getElementById("next").addEventListener("click", () => {
-  currentSong = (currentSong + 1) % songs.length;
-  loadSong(songs[currentSong]);
-  audio.play();
+  nextSong();
 });
 
 document.getElementById("prev").addEventListener("click", () => {
-  currentSong = (currentSong - 1 + songs.length) % songs.length;
-  loadSong(songs[currentSong]);
-  audio.play();
+  prevSong();
 });
 
+// Progress bar
 audio.addEventListener("timeupdate", () => {
-  progress.value = (audio.currentTime / audio.duration) * 100;
+  if (audio.duration) {
+    progress.value = (audio.currentTime / audio.duration) * 100;
+  }
 });
 
 progress.addEventListener("input", () => {
   audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
+// Autoplay next track when song ends
+audio.addEventListener("ended", () => {
+  nextSong();
+});
+
+// Functions to switch songs
+function nextSong() {
+  currentSong = (currentSong + 1) % songs.length;
+  loadSong(songs[currentSong]);
+  audio.play();
+}
+
+function prevSong() {
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
+  loadSong(songs[currentSong]);
+  audio.play();
+}
+
+// Media Session API for lock screen controls
+function updateMediaSession(song) {
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song.title,
+      artist: "PookieRhythms",
+      artwork: [
+        { src: song.cover, sizes: "512x512", type: "image/jpg" }
+      ]
+    });
+
+    navigator.mediaSession.setActionHandler("play", () => audio.play());
+    navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+    navigator.mediaSession.setActionHandler("previoustrack", () => prevSong());
+    navigator.mediaSession.setActionHandler("nexttrack", () => nextSong());
+  }
+}
+
+// Lyrics button
+document.getElementById("lyrics").addEventListener("click", async () => {
+  const lyricsBox = document.getElementById("lyrics-box");
+  lyricsBox.innerText = "Generating lyrics... 🎶";
+
+  // Placeholder (replace with OpenAI API or lyrics API later)
+  setTimeout(() => {
+    lyricsBox.innerText = `✨ AI Lyrics for ${songs[currentSong].title}\n\n[Sample lyrics here...]`;
+  }, 2000);
+});
+
+// Load first song
 loadSong(songs[currentSong]);
