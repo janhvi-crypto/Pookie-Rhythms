@@ -49,3 +49,22 @@ body {
   width: 100%;
   margin-top: 10px;
 }
+
+#lyrics {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #673ab7;
+  color: white;
+  cursor: pointer;
+}
+
+#lyrics-box {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  max-height: 150px;
+  overflow-y: auto;
+}
