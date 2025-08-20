@@ -30,31 +30,30 @@ function loadSong(song) {
   title.textContent = song.title;
   audio.src = song.src;
   cover.src = song.cover;
-  updateMediaSession(song);
+  updateMediaSession(song); // ✅ refresh metadata each time
 }
 
 // Play / Pause controls
-document.getElementById("play").addEventListener("click", () => {
-  audio.play();
-});
-
-document.getElementById("pause").addEventListener("click", () => {
-  audio.pause();
-});
+document.getElementById("play").addEventListener("click", () => audio.play());
+document.getElementById("pause").addEventListener("click", () => audio.pause());
 
 // Next / Prev controls
-document.getElementById("next").addEventListener("click", () => {
-  nextSong();
-});
+document.getElementById("next").addEventListener("click", nextSong);
+document.getElementById("prev").addEventListener("click", prevSong);
 
-document.getElementById("prev").addEventListener("click", () => {
-  prevSong();
-});
-
-// Progress bar
+// Progress bar sync + lock screen sync
 audio.addEventListener("timeupdate", () => {
   if (audio.duration) {
     progress.value = (audio.currentTime / audio.duration) * 100;
+
+    // ✅ keep lock screen seek bar in sync
+    if ("setPositionState" in navigator.mediaSession) {
+      navigator.mediaSession.setPositionState({
+        duration: audio.duration,
+        playbackRate: audio.playbackRate,
+        position: audio.currentTime
+      });
+    }
   }
 });
 
@@ -63,9 +62,7 @@ progress.addEventListener("input", () => {
 });
 
 // Autoplay next track when song ends
-audio.addEventListener("ended", () => {
-  nextSong();
-});
+audio.addEventListener("ended", nextSong);
 
 // Functions to switch songs
 function nextSong() {
@@ -93,21 +90,28 @@ function updateMediaSession(song) {
 
     navigator.mediaSession.setActionHandler("play", () => audio.play());
     navigator.mediaSession.setActionHandler("pause", () => audio.pause());
-    navigator.mediaSession.setActionHandler("previoustrack", () => prevSong());
-    navigator.mediaSession.setActionHandler("nexttrack", () => nextSong());
+    navigator.mediaSession.setActionHandler("previoustrack", prevSong);
+    navigator.mediaSession.setActionHandler("nexttrack", nextSong);
+
+    // ✅ allow dragging seek bar on lock screen
+    navigator.mediaSession.setActionHandler("seekto", (details) => {
+      if (details.fastSeek && "fastSeek" in audio) {
+        audio.fastSeek(details.seekTime);
+      } else {
+        audio.currentTime = details.seekTime;
+      }
+    });
+
+    // Optional skip buttons
+    navigator.mediaSession.setActionHandler("seekbackward", (details) => {
+      audio.currentTime = Math.max(audio.currentTime - (details.seekOffset || 10), 0);
+    });
+
+    navigator.mediaSession.setActionHandler("seekforward", (details) => {
+      audio.currentTime = Math.min(audio.currentTime + (details.seekOffset || 10), audio.duration);
+    });
   }
 }
-
-// Lyrics button
-document.getElementById("lyrics").addEventListener("click", async () => {
-  const lyricsBox = document.getElementById("lyrics-box");
-  lyricsBox.innerText = "Generating lyrics... 🎶";
-
-  // Placeholder (replace with OpenAI API or lyrics API later)
-  setTimeout(() => {
-    lyricsBox.innerText = `✨ AI Lyrics for ${songs[currentSong].title}\n\n[Sample lyrics here...]`;
-  }, 2000);
-});
 
 // Load first song
 loadSong(songs[currentSong]);
