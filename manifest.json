@@ -1,0 +1,15 @@
+{
+  "name": "PookieRhythms",
+  "short_name": "PookieRhythms",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ff69b4",
+  "theme_color": "#ff69b4",
+  "icons": [
+    {
+      "src": "covers/cover1.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
