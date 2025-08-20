@@ -21,7 +21,7 @@ It’s built as a **Progressive Web App (PWA)**, which means you can install it 
 ---
 
 ## 📥 Installation
- Open [PookieRhythms] (https://janhvi-crypto.github.io/PookieRhythms/) in your browser.  
+ Open [PookieRhythms] () in your browser.  
  
 
 ---
