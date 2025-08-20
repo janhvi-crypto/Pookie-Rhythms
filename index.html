@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PookieRhythms 🎶</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="player">
+    <div class="logo">🎵 PookieRhythms</div>
+
+    <div class="cover">
+      <img id="cover" src="covers/cover1.jpg" alt="Cover">
+    </div>
+
+    <h2 id="title">Song 1</h2>
+
+    <audio id="audio" preload="auto"></audio>
+
+    <div class="controls">
+      <button id="prev">⏮</button>
+      <button id="play">▶️</button>
+      <button id="pause">⏸</button>
+      <button id="next">⏭</button>
+    </div>
+
+    <input type="range" id="progress" value="0" min="0" max="100">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
