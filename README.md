@@ -9,7 +9,8 @@ It’s built as a **Progressive Web App (PWA)**, which means you can install it 
 - 🎶 Ad-free personal music player  
 - 📱 Installable PWA via `manifest.json`  
 - 🎨 Clean UI for smooth listening experience  
-- 🚀 Runs in the browser — no downloads needed  
+- 🚀 Runs in the browser — no downloads needed
+- Integration of Media Session API which enables app to work and be controlled even after locking the screen.
 
 ---
 
