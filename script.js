@@ -1,3 +1,6 @@
+// ⚠️ LOCAL TESTING ONLY — DO NOT PUSH TO GITHUB
+const OPENAI_API_KEY = "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";
+
 const songs = [
   { title: "Chihiro", src: "songs/song1.mp3", cover: "covers/cover1.jpg" },
   { title: "Scott & Zelda", src: "songs/song2.mp3", cover: "covers/cover2.jpg" },
@@ -122,15 +125,49 @@ async function updateMediaSession(song) {
   }
 }
 
-// Lyrics button (placeholder)
+// 🎵 Lyrics button with AI generation
 document.getElementById("lyrics").addEventListener("click", async () => {
   const lyricsBox = document.getElementById("lyrics-box");
-  lyricsBox.innerText = "Generating lyrics... 🎶";
+  const songTitle = songs[currentSong].title;
 
-  // Placeholder (replace with OpenAI API or lyrics API later)
-  setTimeout(() => {
-    lyricsBox.innerText = `✨ AI Lyrics for ${songs[currentSong].title}\n\n[Sample lyrics here...]`;
-  }, 2000);
+  lyricsBox.innerText = "✨ Generating AI lyrics... Please wait 🎶";
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a creative songwriter. If the song appears to be non-English, first generate lyrics in the native language, then provide an English translation below it."
+          },
+          {
+            role: "user",
+            content: `Generate song lyrics inspired by the title "${songTitle}".`
+          }
+        ],
+        temperature: 0.8
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.choices || !data.choices.length) {
+      throw new Error("No lyrics generated");
+    }
+
+    lyricsBox.innerText = data.choices[0].message.content;
+
+  } catch (error) {
+    console.error(error);
+    lyricsBox.innerText = "❌ Failed to generate lyrics. Try again.";
+  }
 });
 
 // Load first song
