@@ -1,5 +1,4 @@
-// ⚠️ LOCAL TESTING ONLY — DO NOT PUSH TO GITHUB
-const OPENAI_API_KEY = "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";
+
 
 const songs = [
   { title: "Chihiro", src: "songs/song1.mp3", cover: "covers/cover1.jpg" },
