@@ -25,8 +25,8 @@ It’s built as a **Progressive Web App (PWA)**, which means you can install it 
  Open [PookieRhythms] (https://janhvi-crypto.github.io/Pookie-Rhythms/) in your browser.  
 
 ## Lock-Screen Look!
-<img width="530" height="1000" alt="image" src="https://github.com/user-attachments/assets/749db43a-036a-402c-8989-76caf1f736d1" />
-<img width="530" height="1000" alt="image" src="https://github.com/user-attachments/assets/67c142af-f633-4ea2-81ea-02b366a74f80" />
+<img width="500" height="800" alt="image" src="https://github.com/user-attachments/assets/749db43a-036a-402c-8989-76caf1f736d1" />
+<img width="500" height="800" alt="image" src="https://github.com/user-attachments/assets/67c142af-f633-4ea2-81ea-02b366a74f80" />
 
 
  
