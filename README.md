@@ -2,7 +2,7 @@
 
 **PookieRhythms** is a personal music player web app — think of it as *my own Spotify, but without ads*.  
 It’s built as a **Progressive Web App (PWA)**, which means you can install it on your device and enjoy it just like a native app.
-
+**Disclaimer**: For public deployment, use only royalty free music tracks. This is just a small-scale sample personal project.
 ---
 
 ## ✨ Features
